@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="container-all bg-white">
+    <main className="container-all min-h-[100vh] bg-white">
       {/* Hero Section */}
       <section
         className="pt-[120px] pb-[32px] lg:pt-[136px] xl:pt-[150px] hero-gradient-bg lg:h-[100vh] lg:min-h-[720px] lg:max-h-[782px] xl:max-h-[930px] xl:min-h-[810px] 2xl:max-h-[1180px] 2xl:pl-[288px]"

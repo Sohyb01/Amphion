@@ -4,11 +4,12 @@ import Link from "next/link";
 import React, { useState } from "react";
 
 function Navbar() {
-  const [navOpen, setNavOpen] = useState(true);
+  const [navOpen, setNavOpen] = useState(false);
   return (
     <nav className="fixed duration-200 h-fit z-[100] navbar pink-shadow rounded-[32px] bg-white text-md p-4 px-8 top-4 xl:top-8 flex flex-col gap-8 justify-center">
       <div className="flex justify-between w-full h-8 lg:h-fit items-center">
-        <a href="#">
+        {/* Logo */}
+        <Link href="/">
           <svg
             className="h-6"
             xmlns="http://www.w3.org/2000/svg"
@@ -40,7 +41,7 @@ function Navbar() {
               fill="#9333EA"
             />
           </svg>
-        </a>
+        </Link>
         <button onClick={() => setNavOpen(!navOpen)} className="lg:hidden">
           <svg
             xmlns="http://www.w3.org/2000/svg"
