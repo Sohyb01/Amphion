@@ -17,11 +17,129 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  min-height: 100vh;
+  /* @apply bg-white */
+}
+* {
+  line-height: 165%;
+}
+
+input:-webkit-autofill,
+select:-webkit-autofill {
+  /* Set the background color to your desired value */
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+  -webkit-text-fill-color: #001407;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 120px;
+}
+
+/* Project Styling */
+.navbar {
+  width: calc(100% - 32px);
+  margin-left: 16px;
+}
+@media screen and (min-width: 480px) {
+  .navbar {
+    width: calc(100% - 48px);
+    margin-left: 24px;
+  }
+}
+@media screen and (min-width: 768px) {
+  .navbar {
+    width: calc(100% - 64px);
+    margin-left: 32px;
+  }
+}
+@media screen and (min-width: 1080px) {
+  .navbar {
+    width: calc(100% - 80px);
+    margin-left: 40px;
+  }
+}
+@media screen and (min-width: 1440px) {
+  .navbar {
+    width: calc(100% - 96px);
+    margin-left: 48px;
+  }
+}
+@media screen and (min-width: 1440px) {
+  .navbar {
+    width: calc(100% - 114px);
+    margin-left: 56px;
+  }
+}
+
+.section__styles {
+  @apply  px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12
+  /* py-10 xl:py-20 */
+  sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl mx-auto;
+}
+
+.hero-gradient-bg{
+  background-image: linear-gradient(to bottom, #3F0FFF,#8E47E8,  #CC00FF);
+}
+
+.pink-shadow{
+  box-shadow: 0px 4px 8px rgba(255, 69, 250, 20%)
+}
+
+.cloud-girl-phone-container{
+  height: calc(100vw * (1887 / 1925));
+}
+.cloud-girl-phone{
+  background-image: url(../../public/girl-and-cloud-rounded-phones.png);
+  @apply absolute w-[100vw] aspect-[340/334] left-0 bg-contain bg-no-repeat
+}
+.cloud-girl{
+  background-image: url(../../public/girl-and-cloud-rounded-lg.png);
+  @apply hidden lg:block absolute h-[100vh] min-h-[720px] max-h-[782px] xl:min-h-[810px] xl:max-h-[930px] 2xl:max-h-[1180px] right-0 z-50 bg-cover top-0 aspect-[1590/2160] xl:aspect-[760/810] 2xl:aspect-[1120/1080]
+}
+
+@media screen and (min-width: 1440px) {
+  .cloud-girl{
+  background-image: url(../../public/girl-and-cloud-rounded-xl.png);
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  .cloud-girl{
+  background-image: url(../../public/girl-and-cloud-rounded-2xl.png);
+  }
+}
+.hero-text-section{
+  background-image: url(../../public/hero-mobile-gradient.png);
+  @apply bg-cover
+}
+.social-proof{
+  @apply flex flex-col items-start text-start text-purple-200 font-semibold
+  sm:w-[184px] md:w-fit lg:w-[184px] xl:w-[231px]
+}
+/* Product section 1 */
+.headphones-girl{
+  background-image: url(../../public/headphones-girl.png);
+  @apply w-full aspect-square bg-cover max-w-[432px] lg:max-w-[407px] xl:max-w-[541px]
+}
+
+/* feature gradient */
+.feature-gradient{
+  background-image: linear-gradient(to right, #FF6FD8, #3813C2);
+}
+.feature__styles{
+ @apply flex flex-col gap-4 py-4 items-center w-full shadow-effect lg:w-[484px] xl:w-full
+}
+/* shadow effect */
+.shadow-effect{
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+.review__styles{
+  @apply flex flex-col text-start items-start gap-6 p-4 w-full md:w-[344px] lg:w-[492px] xl:w-[437.33px] bg-white
+}
+
+.button-gradient-bg{
+  background-image: url(../../public/button-gradient.png);
+  @apply bg-cover bg-center
 }
