@@ -7,14 +7,14 @@ export async function GET(request: NextRequest, response: NextResponse) {
   return NextResponse.json({ allProducts });
 }
 
-// CREATE A NEW trip!
+// CREATE A NEW productt!
 export async function POST(request: NextRequest) {
   const body = await request.json();
   const newProduct = await prisma.product.create({ data: body });
   return NextResponse.json({ newProduct });
 }
 
-// DELETE A trip
+// DELETE A product
 export async function DELETE(request: NextRequest) {
   const productId = await request.json();
   const deletedProduct = await prisma.product.delete({

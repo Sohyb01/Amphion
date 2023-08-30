@@ -1,10 +1,22 @@
-import React from "react";
+"use client";
+
+import Image from "next/image";
+import { ShopContext } from "../context/ShopContext";
+import PaypalCheckoutButton from "../components/PaypalCheckoutButton";
+import { useContext } from "react";
 
 function Shop() {
+  // Get the context data, which includes the total price
+  const shopContext = useContext(ShopContext);
+
+  const checkoutData = {
+    description: "Amphion Checkout",
+    price: shopContext?.totalPrice,
+  };
   return (
     <main className="container-all min-h-[100vh] bg-neutral-100 pt-[120px] lg:pt-[180px] pb-[100px]">
       <div className="text-md text-neutral-800 hidden lg:block text-start pb-4 section__styles">
-        Your cart (4 items)
+        Your cart ({shopContext?.cart.length} items)
       </div>
       <section className="z-10  flex flex-col lg:flex-row-reverse items-start gap-8 section__styles">
         {/* Order summary part */}
@@ -19,7 +31,7 @@ function Shop() {
             {/* Subtotal */}
             <div className="flex w-full justify-between text-sm">
               <p className="text-neutral-500">Subtotal</p>
-              <p className="text-neutral-800">$789</p>
+              <p className="text-neutral-800">${shopContext?.totalPrice}</p>
             </div>
             {/* Shipping */}
             <div className="flex w-full justify-between text-sm">
@@ -29,11 +41,11 @@ function Shop() {
             {/* Discounts */}
             <div className="flex w-full justify-between text-sm">
               <p className="text-neutral-500">Sales discount(s)</p>
-              <p className="text-neutral-800">$70, $69</p>
+              <p className="text-neutral-800">$0</p>
             </div>
             <div className="flex w-full justify-between text-sm">
               <p className="text-neutral-500">Total Savings</p>
-              <p className="text-neutral-800">$130</p>
+              <p className="text-neutral-800">$0</p>
             </div>
             <div className="flex w-full justify-between text-sm">
               <p className="text-neutral-500">Tax</p>
@@ -47,10 +59,14 @@ function Shop() {
             {/* Total and label */}
             <div className="flex w-full justify-between text-md text-neutral-800">
               <p>Order total:</p>
-              <p>$</p>
+              <p>${shopContext?.totalPrice}</p>
             </div>
             {/* Checkout button */}
-            <div className="flex items-center justify-center gap-2 bg-blue-500 text-white text-sm px-8 py-2">
+            <PaypalCheckoutButton
+              checkoutData={checkoutData}
+            ></PaypalCheckoutButton>
+
+            {/* <div className="flex items-center justify-center gap-2 bg-blue-500 text-white text-sm px-8 py-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -64,15 +80,15 @@ function Shop() {
                 />
               </svg>
               Secure Checkout
-            </div>
+            </div> */}
           </div>
           {/* Paypal checkout section */}
-          <div className="flex flex-col gap-2 items-center text-center p-4 bg-slate-100 border-[2px] border-neutral-200 border-solid">
+          {/* <div className="flex flex-col gap-2 items-center text-center p-4 bg-slate-100 border-[2px] border-neutral-200 border-solid">
             <p className="text-sm text-neutral-500">Express checkout</p>
             <button className="bg-yellow-500 text-blue-800 text-md font-bold italic text-center w-full px-8 py-2">
               PayPal
             </button>
-          </div>
+          </div> */}
         </div>
         {/* Ordered products and label*/}
         <div className="flex flex-col items-center w-full gap-4">
@@ -82,64 +98,55 @@ function Shop() {
           </div>
           {/* Products container */}
           <div className="flex flex-col gap-4 items-center w-full justify-center">
-            {/* Individual product */}
-            <div className="flex flex-col lg:flex-row gap-8 p-4 items-center lg:items-start text-start w-full max-w-[308px] md:max-w-[344px] lg:max-w-none bg-white shadow-effect">
-              {/* product image */}
-              <div className="aspect-[276/257] w-full lg:w-[302px] lg:aspect-[302/249] bg-slate-300"></div>
-              {/* product details and qty and price */}
-              <div className="flex gap-8 flex-col lg:max-w-[302px] items-start text-start lg:h-full">
-                {/* product details and qty */}
-                <div className="flex flex-col text-start items-start gap-4">
-                  {/* product name */}
-                  <div className="text-purple-900 font-semibold text-md text-start">
-                    WH-1000XMS Wireless Headphones ultra max 200 Prime Edition
-                    13X Purple Special needs kids
-                  </div>
-                  {/* quantity and remove */}
-                  <div className="flex w-full gap-8">
-                    {/* quantity and buttons */}
-                    <div className="flex items-center gap-2 text-sm text-neutral-800">
-                      Quantity: X{/* plus and minus button */}
-                      <div className="flex">
-                        <p>+</p>
-                        <p>-</p>
+            {shopContext?.cart.map((product, index) => {
+              return (
+                <div
+                  key={index}
+                  className="flex flex-col lg:flex-row gap-8 p-4 items-center lg:items-start text-start w-full max-w-[308px] md:max-w-[344px] lg:max-w-none bg-white shadow-effect"
+                >
+                  {/* product image */}
+                  <Image
+                    src={product.img}
+                    width={302}
+                    height={249}
+                    alt="Pictures of headphones"
+                    onClick={() => {
+                      console.log("cart:", shopContext?.cart);
+                      console.log(shopContext?.totalPrice);
+                    }}
+                  />
+                  {/* product details and qty and price */}
+                  <div className="flex gap-8 flex-col lg:max-w-[302px] items-start text-start lg:h-full">
+                    {/* product details and qty */}
+                    <div className="flex flex-col text-start items-start gap-4">
+                      {/* product name */}
+                      <div className="text-purple-900 font-semibold text-md text-start">
+                        {product.name}
+                      </div>
+                      {/* quantity and remove */}
+                      <div className="flex w-full gap-8">
+                        {/* quantity and buttons */}
+                        <div className="flex items-center gap-2 text-sm text-neutral-800">
+                          Quantity: {product.qty}
+                        </div>
+                        <button
+                          onClick={() => {
+                            shopContext.removeFromCart(product.id);
+                          }}
+                          className="text-red-500 underline text-sm"
+                        >
+                          Remove
+                        </button>
                       </div>
                     </div>
-                    <div className="text-red-500 underline text-sm">Remove</div>
+                    <h1 className="text-lg text-neutral-800">
+                      ${product.price}
+                    </h1>
                   </div>
                 </div>
-                <h1 className="text-lg text-neutral-800">$239</h1>
-              </div>
-            </div>
+              );
+            })}
             {/* Individual product */}
-            <div className="flex flex-col lg:flex-row gap-8 p-4 items-center lg:items-start text-start w-full max-w-[308px] md:max-w-[344px] lg:max-w-none bg-white shadow-effect">
-              {/* product image */}
-              <div className="aspect-[276/257] w-full lg:w-[302px] lg:aspect-[302/249] bg-slate-300"></div>
-              {/* product details and qty and price */}
-              <div className="flex gap-8 flex-col lg:max-w-[302px] items-start text-start lg:h-full">
-                {/* product details and qty */}
-                <div className="flex flex-col text-start items-start gap-4">
-                  {/* product name */}
-                  <div className="text-purple-900 font-semibold text-md text-start">
-                    WH-1000XMS Wireless Headphones ultra max 200 Prime Edition
-                    13X Purple Special needs kids
-                  </div>
-                  {/* quantity and remove */}
-                  <div className="flex w-full gap-8">
-                    {/* quantity and buttons */}
-                    <div className="flex items-center gap-2 text-sm text-neutral-800">
-                      Quantity: X{/* plus and minus button */}
-                      <div className="flex">
-                        <p>+</p>
-                        <p>-</p>
-                      </div>
-                    </div>
-                    <div className="text-red-500 underline text-sm">Remove</div>
-                  </div>
-                </div>
-                <h1 className="text-lg text-neutral-800">$239</h1>
-              </div>
-            </div>
           </div>
         </div>
       </section>

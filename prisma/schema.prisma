@@ -16,5 +16,16 @@ model Product {
   price Float @default(0)
   discount Float
   battery_life Int
-  img String?
+  img String
 }
+
+// model User {
+// 
+// }
+
+// To transform this code into actual SQL:
+// npx prisma generate
+// then, this creates the migration
+// npx prisma migrate dev --name init --create-only
+// then, this deploys the actual migration (the changes to the database schema)
+// npx prisma migrate deploy

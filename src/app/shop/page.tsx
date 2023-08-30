@@ -1,12 +1,46 @@
-"use client";
+import React, { useState } from "react";
+import prisma from "../lib/prisma";
+import Product from "../components/Product";
+import Link from "next/link";
+import { ShopContext } from "../context/ShopContext";
+import { cartProductData } from "../types";
 
-import React from "react";
+async function Shop() {
+  // FETCH PRODUCTS FROM PRISMA
+  const allProducts = await prisma.product.findMany();
 
-function Shop() {
+  // FETCH PRODUCTS FROM SHOPIFY ADMIN API
+  // const shopifyData = await fetch(
+  //   "https://b7dc30-4.myshopify.com/admin/api/2023-07/products.json",
+  //   {
+  //     headers: {
+  //       "X-Shopify-Access-Token": "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",
+  //     },
+  //     cache: "no-cache",
+  //   }
+  // );
+  // const uncleanedData = await shopifyData.json();
+
+  // const cleanedProductData = uncleanedData.products.map((product: any) => {
+  //   return {
+  //     name: product.title,
+  //     price: product.variants[0].price,
+  //     img: product.images[0].src,
+  //   };
+  // });
+  // console.log(cleanedProductData);
+
+  // How to get the names
+  // console.log(data.products[0].title);
+  // How to get the price
+  // console.log(data.products[0].variants[0].price);
+
+  // const [cartContent, setCartContent] = useState([]);
+
   return (
     <main className="container-all min-h-[100vh] bg-white pt-[120px] lg:pt-[180px] pb-[100px]">
       <div className="section__styles pt-[120px] flex flex-col lg:flex-row pb-[100px] gap-8">
-        {/* Filters parts */}
+        {/* Filters part */}
         <div className="flex flex-col items-start text-start gap-8 text-neutral-800 w-full max-w-[240px]">
           {/* Filter title */}
           <h1 className="text-neutral-800 text-lg">Filter</h1>
@@ -89,509 +123,29 @@ function Shop() {
           {/* Number label */}
 
           <p className="text-md text-neutral-600 text-start w-full">
-            21 Products
+            {allProducts.length} Products
           </p>
           {/* Products container */}
           <div className="flex flex-col items-center w-full gap-8 md:flex-row md:flex-wrap md:justify-center">
-            {/* Individual product */}
-            <div className="w-[302px] flex flex-col items-center text-start shadow-effect">
-              {/* Image */}
-              <div className="w-full aspect-[302/249] bg-slate-300"></div>
-              {/* Description */}
-              <div className="w-full flex flex-col items-center text-start gap-6 p-4">
-                {/* name and model */}
-                <div className="flex flex-col text-start gap-2">
-                  <h1 className="text-purple-900 font-semibold text-sm">
-                    WH-1000XMS Wireless Headphones ultra max 200 Prime Edition
-                    13X Purple Special needs kids
-                  </h1>
-                  <p className="text-neutral-500 text-sm">Model: ABCD H2 13</p>
+            {allProducts.map((product: cartProductData, index: number) => {
+              // return <h1 key={index}>test</h1>;
+              return (
+                <div key={index}>
+                  <Product data={product}></Product>
                 </div>
-                {/* price */}
-                <div className="text-md text-neutral-800 text-start w-full">
-                  $159
-                </div>
-                {/* Buttons part */}
-                <div className="w-full flex items-center gap-4">
-                  <button className="bg-purple-600 text-white text-center text-sm px-4 py-2 w-full">
-                    Add to cart
-                  </button>
-                  {/* Add and subtract buttons */}
-                  <div className="flex gap-2 items-center text-neutral-800">
-                    <button className="border-purple-600 border-[2px] border-solid aspect-square w-[39px] h-[39px] grid place-items-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="15"
-                        height="3"
-                        viewBox="0 0 15 3"
-                        fill="none"
-                      >
-                        <path
-                          d="M1 1.5H14"
-                          stroke="#9333EA"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                      </svg>
-                    </button>
-                    99
-                    <button className="border-purple-600 border-[2px] border-solid aspect-square w-[39px] h-[39px] grid place-items-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="15"
-                        height="15"
-                        viewBox="0 0 15 15"
-                        fill="none"
-                      >
-                        <path
-                          d="M1 7.5H14"
-                          stroke="#9333EA"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                        <path
-                          d="M7.5 14V1"
-                          stroke="#9333EA"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* Individual product */}
-            <div className="w-[302px] flex flex-col items-center text-start shadow-effect">
-              {/* Image */}
-              <div className="w-full aspect-[302/249] bg-slate-300"></div>
-              {/* Description */}
-              <div className="w-full flex flex-col items-center text-start gap-6 p-4">
-                {/* name and model */}
-                <div className="flex flex-col text-start gap-2">
-                  <h1 className="text-purple-900 font-semibold text-sm">
-                    WH-1000XMS Wireless Headphones ultra max 200 Prime Edition
-                    13X Purple Special needs kids
-                  </h1>
-                  <p className="text-neutral-500 text-sm">Model: ABCD H2 13</p>
-                </div>
-                {/* price */}
-                <div className="text-md text-neutral-800 text-start w-full">
-                  $159
-                </div>
-                {/* Buttons part */}
-                <div className="w-full flex items-center gap-4">
-                  <button className="bg-purple-600 text-white text-center text-sm px-4 py-2 w-full">
-                    Add to cart
-                  </button>
-                  {/* Add and subtract buttons */}
-                  <div className="flex gap-2 items-center text-neutral-800">
-                    <button className="border-purple-600 border-[2px] border-solid aspect-square w-[39px] h-[39px] grid place-items-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="15"
-                        height="3"
-                        viewBox="0 0 15 3"
-                        fill="none"
-                      >
-                        <path
-                          d="M1 1.5H14"
-                          stroke="#9333EA"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                      </svg>
-                    </button>
-                    99
-                    <button className="border-purple-600 border-[2px] border-solid aspect-square w-[39px] h-[39px] grid place-items-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="15"
-                        height="15"
-                        viewBox="0 0 15 15"
-                        fill="none"
-                      >
-                        <path
-                          d="M1 7.5H14"
-                          stroke="#9333EA"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                        <path
-                          d="M7.5 14V1"
-                          stroke="#9333EA"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* Individual product */}
-            <div className="w-[302px] flex flex-col items-center text-start shadow-effect">
-              {/* Image */}
-              <div className="w-full aspect-[302/249] bg-slate-300"></div>
-              {/* Description */}
-              <div className="w-full flex flex-col items-center text-start gap-6 p-4">
-                {/* name and model */}
-                <div className="flex flex-col text-start gap-2">
-                  <h1 className="text-purple-900 font-semibold text-sm">
-                    WH-1000XMS Wireless Headphones ultra max 200 Prime Edition
-                    13X Purple Special needs kids
-                  </h1>
-                  <p className="text-neutral-500 text-sm">Model: ABCD H2 13</p>
-                </div>
-                {/* price */}
-                <div className="text-md text-neutral-800 text-start w-full">
-                  $159
-                </div>
-                {/* Buttons part */}
-                <div className="w-full flex items-center gap-4">
-                  <button className="bg-purple-600 text-white text-center text-sm px-4 py-2 w-full">
-                    Add to cart
-                  </button>
-                  {/* Add and subtract buttons */}
-                  <div className="flex gap-2 items-center text-neutral-800">
-                    <button className="border-purple-600 border-[2px] border-solid aspect-square w-[39px] h-[39px] grid place-items-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="15"
-                        height="3"
-                        viewBox="0 0 15 3"
-                        fill="none"
-                      >
-                        <path
-                          d="M1 1.5H14"
-                          stroke="#9333EA"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                      </svg>
-                    </button>
-                    99
-                    <button className="border-purple-600 border-[2px] border-solid aspect-square w-[39px] h-[39px] grid place-items-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="15"
-                        height="15"
-                        viewBox="0 0 15 15"
-                        fill="none"
-                      >
-                        <path
-                          d="M1 7.5H14"
-                          stroke="#9333EA"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                        <path
-                          d="M7.5 14V1"
-                          stroke="#9333EA"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* Individual product */}
-            <div className="w-[302px] flex flex-col items-center text-start shadow-effect">
-              {/* Image */}
-              <div className="w-full aspect-[302/249] bg-slate-300"></div>
-              {/* Description */}
-              <div className="w-full flex flex-col items-center text-start gap-6 p-4">
-                {/* name and model */}
-                <div className="flex flex-col text-start gap-2">
-                  <h1 className="text-purple-900 font-semibold text-sm">
-                    WH-1000XMS Wireless Headphones ultra max 200 Prime Edition
-                    13X Purple Special needs kids
-                  </h1>
-                  <p className="text-neutral-500 text-sm">Model: ABCD H2 13</p>
-                </div>
-                {/* price */}
-                <div className="text-md text-neutral-800 text-start w-full">
-                  $159
-                </div>
-                {/* Buttons part */}
-                <div className="w-full flex items-center gap-4">
-                  <button className="bg-purple-600 text-white text-center text-sm px-4 py-2 w-full">
-                    Add to cart
-                  </button>
-                  {/* Add and subtract buttons */}
-                  <div className="flex gap-2 items-center text-neutral-800">
-                    <button className="border-purple-600 border-[2px] border-solid aspect-square w-[39px] h-[39px] grid place-items-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="15"
-                        height="3"
-                        viewBox="0 0 15 3"
-                        fill="none"
-                      >
-                        <path
-                          d="M1 1.5H14"
-                          stroke="#9333EA"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                      </svg>
-                    </button>
-                    99
-                    <button className="border-purple-600 border-[2px] border-solid aspect-square w-[39px] h-[39px] grid place-items-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="15"
-                        height="15"
-                        viewBox="0 0 15 15"
-                        fill="none"
-                      >
-                        <path
-                          d="M1 7.5H14"
-                          stroke="#9333EA"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                        <path
-                          d="M7.5 14V1"
-                          stroke="#9333EA"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* Individual product */}
-            <div className="w-[302px] flex flex-col items-center text-start shadow-effect">
-              {/* Image */}
-              <div className="w-full aspect-[302/249] bg-slate-300"></div>
-              {/* Description */}
-              <div className="w-full flex flex-col items-center text-start gap-6 p-4">
-                {/* name and model */}
-                <div className="flex flex-col text-start gap-2">
-                  <h1 className="text-purple-900 font-semibold text-sm">
-                    WH-1000XMS Wireless Headphones ultra max 200 Prime Edition
-                    13X Purple Special needs kids
-                  </h1>
-                  <p className="text-neutral-500 text-sm">Model: ABCD H2 13</p>
-                </div>
-                {/* price */}
-                <div className="text-md text-neutral-800 text-start w-full">
-                  $159
-                </div>
-                {/* Buttons part */}
-                <div className="w-full flex items-center gap-4">
-                  <button className="bg-purple-600 text-white text-center text-sm px-4 py-2 w-full">
-                    Add to cart
-                  </button>
-                  {/* Add and subtract buttons */}
-                  <div className="flex gap-2 items-center text-neutral-800">
-                    <button className="border-purple-600 border-[2px] border-solid aspect-square w-[39px] h-[39px] grid place-items-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="15"
-                        height="3"
-                        viewBox="0 0 15 3"
-                        fill="none"
-                      >
-                        <path
-                          d="M1 1.5H14"
-                          stroke="#9333EA"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                      </svg>
-                    </button>
-                    99
-                    <button className="border-purple-600 border-[2px] border-solid aspect-square w-[39px] h-[39px] grid place-items-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="15"
-                        height="15"
-                        viewBox="0 0 15 15"
-                        fill="none"
-                      >
-                        <path
-                          d="M1 7.5H14"
-                          stroke="#9333EA"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                        <path
-                          d="M7.5 14V1"
-                          stroke="#9333EA"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* Individual product */}
-            <div className="w-[302px] flex flex-col items-center text-start shadow-effect">
-              {/* Image */}
-              <div className="w-full aspect-[302/249] bg-slate-300"></div>
-              {/* Description */}
-              <div className="w-full flex flex-col items-center text-start gap-6 p-4">
-                {/* name and model */}
-                <div className="flex flex-col text-start gap-2">
-                  <h1 className="text-purple-900 font-semibold text-sm">
-                    WH-1000XMS Wireless Headphones ultra max 200 Prime Edition
-                    13X Purple Special needs kids
-                  </h1>
-                  <p className="text-neutral-500 text-sm">Model: ABCD H2 13</p>
-                </div>
-                {/* price */}
-                <div className="text-md text-neutral-800 text-start w-full">
-                  $159
-                </div>
-                {/* Buttons part */}
-                <div className="w-full flex items-center gap-4">
-                  <button className="bg-purple-600 text-white text-center text-sm px-4 py-2 w-full">
-                    Add to cart
-                  </button>
-                  {/* Add and subtract buttons */}
-                  <div className="flex gap-2 items-center text-neutral-800">
-                    <button className="border-purple-600 border-[2px] border-solid aspect-square w-[39px] h-[39px] grid place-items-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="15"
-                        height="3"
-                        viewBox="0 0 15 3"
-                        fill="none"
-                      >
-                        <path
-                          d="M1 1.5H14"
-                          stroke="#9333EA"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                      </svg>
-                    </button>
-                    99
-                    <button className="border-purple-600 border-[2px] border-solid aspect-square w-[39px] h-[39px] grid place-items-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="15"
-                        height="15"
-                        viewBox="0 0 15 15"
-                        fill="none"
-                      >
-                        <path
-                          d="M1 7.5H14"
-                          stroke="#9333EA"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                        <path
-                          d="M7.5 14V1"
-                          stroke="#9333EA"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* Individual product */}
-            <div className="w-[302px] flex flex-col items-center text-start shadow-effect">
-              {/* Image */}
-              <div className="w-full aspect-[302/249] bg-slate-300"></div>
-              {/* Description */}
-              <div className="w-full flex flex-col items-center text-start gap-6 p-4">
-                {/* name and model */}
-                <div className="flex flex-col text-start gap-2">
-                  <h1 className="text-purple-900 font-semibold text-sm">
-                    WH-1000XMS Wireless Headphones ultra max 200 Prime Edition
-                    13X Purple Special needs kids
-                  </h1>
-                  <p className="text-neutral-500 text-sm">Model: ABCD H2 13</p>
-                </div>
-                {/* price */}
-                <div className="text-md text-neutral-800 text-start w-full">
-                  $159
-                </div>
-                {/* Buttons part */}
-                <div className="w-full flex items-center gap-4">
-                  <button className="bg-purple-600 text-white text-center text-sm px-4 py-2 w-full">
-                    Add to cart
-                  </button>
-                  {/* Add and subtract buttons */}
-                  <div className="flex gap-2 items-center text-neutral-800">
-                    <button className="border-purple-600 border-[2px] border-solid aspect-square w-[39px] h-[39px] grid place-items-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="15"
-                        height="3"
-                        viewBox="0 0 15 3"
-                        fill="none"
-                      >
-                        <path
-                          d="M1 1.5H14"
-                          stroke="#9333EA"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                      </svg>
-                    </button>
-                    99
-                    <button className="border-purple-600 border-[2px] border-solid aspect-square w-[39px] h-[39px] grid place-items-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="15"
-                        height="15"
-                        viewBox="0 0 15 15"
-                        fill="none"
-                      >
-                        <path
-                          d="M1 7.5H14"
-                          stroke="#9333EA"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                        <path
-                          d="M7.5 14V1"
-                          stroke="#9333EA"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
         </div>
+      </div>
+      <div className="section__styles grid place-items-center pt-4">
+        {/* Checkout cart button */}
+        <Link
+          href="/cart"
+          className="px-8 py-4 text-center w-full grid place-items-center border-[2px] border-solid border-purple-600 bg-white text-purple-600 rounded-[20px] text-lg font-semibold max-w-[480px]"
+        >
+          Cart & Checkout
+        </Link>
       </div>
     </main>
   );
