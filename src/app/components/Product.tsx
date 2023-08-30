@@ -5,7 +5,7 @@ import { cartProductData, cartProductDataAndAmount } from "../types";
 import Image from "next/image";
 
 import { useContext } from "react";
-import { ShopContext } from "../context/ShopContext";
+import { ShopContext, ShopContextProvider } from "../context/ShopContext";
 
 function Product(data: any) {
   const [qty, setQty] = useState(1);
@@ -38,10 +38,6 @@ function Product(data: any) {
         width={302}
         height={249}
         alt="Pictures of headphones"
-        onClick={() => {
-          console.log("cart:", shopContext?.cart);
-          console.log(shopContext?.totalPrice);
-        }}
       />
       {/* Description */}
       <div className="w-full flex flex-col items-center text-start gap-6 p-4">

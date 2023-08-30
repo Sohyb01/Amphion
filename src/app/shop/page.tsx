@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import prisma from "../lib/prisma";
 import Product from "../components/Product";
 import Link from "next/link";
-import { ShopContext } from "../context/ShopContext";
 import { cartProductData } from "../types";
 
 async function Shop() {
