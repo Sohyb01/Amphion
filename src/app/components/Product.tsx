@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { cartProductData, cartProductDataAndAmount } from "../types";
 import Image from "next/image";
-
+import { PopupsStateContext } from "../context/PopupsStateContext";
 import { useContext } from "react";
 import { ShopContext, ShopContextProvider } from "../context/ShopContext";
 
@@ -14,6 +13,7 @@ function Product(data: any) {
   // const [showErrorMessage, setShowErrorMessage] = useState(false);
 
   const shopContext = useContext(ShopContext);
+  const popupsContext = useContext(PopupsStateContext);
   // console.log(shopContext);
 
   const addProductToContextCart = () => {
@@ -26,7 +26,7 @@ function Product(data: any) {
       img: data.data.img,
       qty,
     });
-    alert("Items added successfully!");
+    popupsContext?.changePopupsState("success");
   };
 
   return (
@@ -51,7 +51,7 @@ function Product(data: any) {
         {/* price */}
         <div className="text-md text-neutral-800 text-start w-full">
           {" "}
-          ${data.data.price}
+          €{data.data.price}
         </div>
         {/* Buttons part */}
         <div className="w-full flex items-center gap-4">

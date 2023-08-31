@@ -4,15 +4,19 @@
 
 import React, { useState } from "react";
 import { PayPalButtons } from "@paypal/react-paypal-js";
+import { ShopContext } from "../context/ShopContext";
+import { useContext } from "react";
+import { PopupsStateContext } from "../context/PopupsStateContext";
 
 const PaypalCheckoutButton = (props: any) => {
-  const { checkoutData } = props;
+  const popupsContext = useContext(PopupsStateContext);
+  const shopContext = useContext(ShopContext);
 
   const [error, setError] = useState(null);
 
   if (error) {
     // Display error message, modal or redirect user to error page
-    // alert(error);
+    // popupsContext?.changePopupsState("error");
   }
 
   const [paidFor, setPaidFor] = useState(false);
@@ -47,9 +51,9 @@ const PaypalCheckoutButton = (props: any) => {
         return actions.order.create({
           purchase_units: [
             {
-              description: checkoutData.description,
+              description: "Amphion checkout",
               amount: {
-                value: checkoutData.price,
+                value: shopContext?.totalPrice,
               },
             },
           ],

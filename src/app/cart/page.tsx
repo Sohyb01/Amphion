@@ -9,10 +9,6 @@ function Shop() {
   // Get the context data, which includes the total price
   const shopContext = useContext(ShopContext);
 
-  const checkoutData = {
-    description: "Amphion Checkout",
-    price: shopContext?.totalPrice,
-  };
   return (
     <main className="container-all min-h-[100vh] bg-neutral-100 pt-[120px] lg:pt-[180px] pb-[100px]">
       <div className="text-md text-neutral-800 hidden lg:block text-start pb-4 section__styles">
@@ -31,7 +27,7 @@ function Shop() {
             {/* Subtotal */}
             <div className="flex w-full justify-between text-sm">
               <p className="text-neutral-500">Subtotal</p>
-              <p className="text-neutral-800">${shopContext?.totalPrice}</p>
+              <p className="text-neutral-800">€{shopContext?.totalPrice}</p>
             </div>
             {/* Shipping */}
             <div className="flex w-full justify-between text-sm">
@@ -41,11 +37,11 @@ function Shop() {
             {/* Discounts */}
             <div className="flex w-full justify-between text-sm">
               <p className="text-neutral-500">Sales discount(s)</p>
-              <p className="text-neutral-800">$0</p>
+              <p className="text-neutral-800">€0</p>
             </div>
             <div className="flex w-full justify-between text-sm">
               <p className="text-neutral-500">Total Savings</p>
-              <p className="text-neutral-800">$0</p>
+              <p className="text-neutral-800">€0</p>
             </div>
             <div className="flex w-full justify-between text-sm">
               <p className="text-neutral-500">Tax</p>
@@ -59,11 +55,14 @@ function Shop() {
             {/* Total and label */}
             <div className="flex w-full justify-between text-md text-neutral-800">
               <p>Order total:</p>
-              <p>${shopContext?.totalPrice}</p>
+              <p>€{shopContext?.totalPrice}</p>
             </div>
             {/* Checkout button */}
             <PaypalCheckoutButton
-              checkoutData={checkoutData}
+              checkoutData={{
+                description: "Amphion Checkout",
+                price: shopContext?.totalPrice,
+              }}
             ></PaypalCheckoutButton>
 
             {/* <div className="flex items-center justify-center gap-2 bg-blue-500 text-white text-sm px-8 py-2">
@@ -140,7 +139,7 @@ function Shop() {
                       </div>
                     </div>
                     <h1 className="text-lg text-neutral-800">
-                      ${product.price}
+                      €{product.price}
                     </h1>
                   </div>
                 </div>
