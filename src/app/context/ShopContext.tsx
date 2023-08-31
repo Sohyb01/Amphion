@@ -15,9 +15,13 @@ export type GlobalContextContent = {
   setPriceFilters: (arr: priceFilters) => void;
   priceFilterTest: (product: cartProductData) => boolean;
   totalPrice: number;
+  setBatteryFilter: (arr: batteryFilters) => void;
+  batteryFilterTest: (product: cartProductData) => boolean;
 } | null;
 
 export type priceFilters = number[] | null;
+
+export type batteryFilters = number | null;
 // Type of each cart item
 // export type CartItem = { name: string; price: number; qty: number };
 
@@ -70,6 +74,20 @@ export const ShopContextProvider = (props: any) => {
     ); //Return true if the product price is in the correct range, false otherwise
   };
 
+  // Set battery filter
+  const [batteryMin, setBatteryMin] = useState<batteryFilters>(null);
+
+  // Function to call to set the battery filter from other components
+  const setBatteryFilter = (arr: batteryFilters) => {
+    setBatteryMin(arr);
+  };
+
+  // Price filter testing function
+  const batteryFilterTest = (product: cartProductData) => {
+    if (!batteryMin) return true; //If the array is null, return true automatically
+    return product.battery_life >= batteryMin; //Return true if the product price is in the correct range, false otherwise
+  };
+
   const contextValue = {
     cart,
     addToCart,
@@ -77,6 +95,8 @@ export const ShopContextProvider = (props: any) => {
     totalPrice,
     setPriceFilters,
     priceFilterTest,
+    setBatteryFilter,
+    batteryFilterTest,
   };
 
   return (

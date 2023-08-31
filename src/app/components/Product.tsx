@@ -32,7 +32,10 @@ function Product(data: any) {
   return (
     <div
       className={`w-[302px] flex flex-col items-center text-start shadow-effect ${
-        shopContext?.priceFilterTest(data.data) ? "" : "hidden"
+        shopContext?.priceFilterTest(data.data) &&
+        shopContext.batteryFilterTest(data.data)
+          ? ""
+          : "hidden"
       }`}
     >
       {/* Image */}

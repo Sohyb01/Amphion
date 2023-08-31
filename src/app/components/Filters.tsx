@@ -22,38 +22,53 @@ function Filters() {
             <div className="flex items-center gap-2">
               <p className="w-[10ch]">Any</p>
               <input
+                onClick={() => {
+                  shopContext?.setBatteryFilter(null);
+                }}
                 type="radio"
                 name="radio-2"
                 className="radio border-solid border-neutral-400 border-[2px]"
               />
             </div>
             <div className="flex items-center gap-2">
-              <p className="w-[10ch]">&gt;20 Hours</p>
+              <p className="w-[10ch]">20+ Hours</p>
               <input
+                onClick={() => {
+                  shopContext?.setBatteryFilter(20);
+                }}
                 type="radio"
                 name="radio-2"
                 className="radio  border-solid border-neutral-400 border-[2px]"
               />
             </div>
             <div className="flex items-center gap-2">
-              <p className="w-[10ch]">&gt;30 Hours</p>
+              <p className="w-[10ch]">30+ Hours</p>
               <input
+                onClick={() => {
+                  shopContext?.setBatteryFilter(30);
+                }}
                 type="radio"
                 name="radio-2"
                 className="radio  border-solid border-neutral-400 border-[2px]"
               />
             </div>
             <div className="flex items-center gap-2">
-              <p className="w-[10ch]">&gt;40 Hours</p>
+              <p className="w-[10ch]">40+ Hours</p>
               <input
+                onClick={() => {
+                  shopContext?.setBatteryFilter(40);
+                }}
                 type="radio"
                 name="radio-2"
                 className="radio  border-solid border-neutral-400 border-[2px]"
               />
             </div>
             <div className="flex items-center gap-2">
-              <p className="w-[10ch]">&gt;50 Hours</p>
+              <p className="w-[10ch]">50+ Hours</p>
               <input
+                onClick={() => {
+                  shopContext?.setBatteryFilter(50);
+                }}
                 type="radio"
                 name="radio-2"
                 className="radio  border-solid border-neutral-400 border-[2px]"
