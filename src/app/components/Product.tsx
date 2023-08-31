@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { PopupsStateContext } from "../context/PopupsStateContext";
 import { useContext } from "react";
-import { ShopContext, ShopContextProvider } from "../context/ShopContext";
+import { ShopContext } from "../context/ShopContext";
 
 function Product(data: any) {
   const [qty, setQty] = useState(1);
@@ -30,7 +30,11 @@ function Product(data: any) {
   };
 
   return (
-    <div className="w-[302px] flex flex-col items-center text-start shadow-effect">
+    <div
+      className={`w-[302px] flex flex-col items-center text-start shadow-effect ${
+        shopContext?.priceFilterTest(data.data) ? "" : "hidden"
+      }`}
+    >
       {/* Image */}
       {/* <div className="w-full aspect-[302/249] bg-slate-300"></div> */}
       <Image
@@ -46,7 +50,9 @@ function Product(data: any) {
           <h1 className="text-purple-900 font-semibold text-sm">
             {data.data.name}
           </h1>
-          <p className="text-neutral-500 text-sm">Model: ABCD H2 13</p>
+          <p className="text-neutral-500 text-sm">
+            Battery life: {data.data.battery_life}H
+          </p>
         </div>
         {/* price */}
         <div className="text-md text-neutral-800 text-start w-full">

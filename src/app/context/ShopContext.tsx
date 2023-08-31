@@ -12,9 +12,12 @@ export type GlobalContextContent = {
   cart: CartContent;
   addToCart: (item: cartProductDataAndAmount) => void;
   removeFromCart: (itemId: string) => void;
+  setPriceFilters: (arr: priceFilters) => void;
+  priceFilterTest: (product: cartProductData) => boolean;
   totalPrice: number;
 } | null;
 
+export type priceFilters = number[] | null;
 // Type of each cart item
 // export type CartItem = { name: string; price: number; qty: number };
 
@@ -50,7 +53,31 @@ export const ShopContextProvider = (props: any) => {
     const newCart = cart.filter((item) => item.id !== itemId);
     setCart(newCart);
   };
-  const contextValue = { cart, addToCart, removeFromCart, totalPrice };
+
+  // Set price filter
+  const [priceMinAndMax, setPriceMinAndMax] = useState<priceFilters>(null);
+
+  // Function to call to set the price filters from other components
+  const setPriceFilters = (arr: priceFilters) => {
+    setPriceMinAndMax(arr);
+  };
+
+  // Price filter testing function
+  const priceFilterTest = (product: cartProductData) => {
+    if (!priceMinAndMax) return true; //If the array is null, return true automatically
+    return (
+      product.price >= priceMinAndMax[0] && product.price <= priceMinAndMax[1]
+    ); //Return true if the product price is in the correct range, false otherwise
+  };
+
+  const contextValue = {
+    cart,
+    addToCart,
+    removeFromCart,
+    totalPrice,
+    setPriceFilters,
+    priceFilterTest,
+  };
 
   return (
     <ShopContext.Provider value={contextValue}>
