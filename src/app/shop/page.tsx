@@ -53,7 +53,7 @@ async function Shop() {
           {/* Number label */}
 
           <p className="text-md text-neutral-600 text-start w-full">
-            {allProducts.length} Products
+            {allProducts.length} Total products available
           </p>
           {/* Products container */}
           <div className="flex flex-col items-center w-full gap-8 md:flex-row md:flex-wrap md:justify-center">
