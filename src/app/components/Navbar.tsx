@@ -75,9 +75,9 @@ function Navbar() {
         </button>
         {/* nav links */}
         <div className="hidden lg:flex gap-6">
-          <a href="#product" className="text-md text-purple-600">
+          <Link href="/#product" className="text-md text-purple-600">
             Product
-          </a>
+          </Link>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="14"
@@ -89,9 +89,9 @@ function Navbar() {
             <rect x="6" width="2" height="30" rx="1" fill="#D8B4FE" />
             <rect x="12" y="9" width="2" height="12" rx="1" fill="#D8B4FE" />
           </svg>
-          <a href="#reviews" className="text-md text-purple-600">
+          <Link href="/#reviews" className="text-md text-purple-600">
             Reviews
-          </a>
+          </Link>
 
           <svg
             xmlns="http://www.w3.org/2000/svg"
